@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Locker: is every long verified before use?</title>
+<meta name="description" content="Locker checks source code in a static sandbox and stamps it Not safe when long integers, or strings that are really longs, reach an endpoint without verification. Insert gate fixes it locally.">
+<link rel="icon" href="assets/icon.svg">
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><img src="assets/icon.svg" alt="" width="34" height="34"><div><h1>Locker</h1><p>Every long is verified before use, or the endpoint is not isolated.</p></div></div>
+  <nav>
+    <label class="btn ghost">Load files<input id="files" type="file" multiple hidden></label>
+    <select id="sample" aria-label="Samples"><option value="">Samples…</option></select>
+    <button id="aiSettings" class="btn ghost" title="Optional AI fixer">AI: off</button>
+  </nav>
+</header>
+<main>
+  <section class="pane editor-pane">
+    <div class="tabs" id="tabs"></div>
+    <div class="editor"><pre id="gutter" aria-hidden="true"></pre><textarea id="code" spellcheck="false" aria-label="Source code"></textarea></div>
+    <div class="row">
+      <input id="fname" value="pasted.js" aria-label="File name (sets language)">
+      <span id="lang" class="pill"></span>
+      <span class="grow"></span>
+      <button id="gate" class="btn">Insert gate</button>
+      <button id="ai" class="btn primary">Fix with AI</button>
+    </div>
+  </section>
+  <section class="pane result-pane">
+    <div class="stampbox"><div id="stamp" class="stamp">—</div><div id="summary" class="summary"></div></div>
+    <ol id="findings" class="findings"></ol>
+    <div id="fixbox" class="fixbox" hidden>
+      <h3 id="fixTitle">Rewrite</h3>
+      <p id="fixNote" class="muted"></p>
+      <pre id="diff" class="diff"></pre>
+      <div class="row"><span id="recheck" class="pill"></span><span class="grow"></span><button id="discard" class="btn ghost">Discard</button><button id="apply" class="btn primary">Apply rewrite</button></div>
+    </div>
+    <details class="known">
+      <summary>Known stamp (residual rule)</summary>
+      <p class="muted">Four cases only: null and zero-b are −1, aligned 1 is 0, aligned 3 is 2. Open parallel and every long goes out of date: read refuses it. Close parallel and the residuals refresh.</p>
+      <div class="row">
+        <label>b <input id="kb" value="7" size="5"></label>
+        <label>aligned <select id="ka"><option>1</option><option selected>3</option></select></label>
+        <button id="kwrite" class="btn ghost">Write</button>
+        <button id="kpar" class="btn ghost">Open parallel</button>
+        <button id="kread" class="btn">Read</button>
+      </div>
+      <pre id="klog" class="klog"></pre>
+    </details>
+    <div class="row"><span class="grow"></span><button id="share" class="btn ghost">Share card</button></div>
+  </section>
+</main>
+<dialog id="aiDialog">
+  <form method="dialog">
+    <h3>Fix with AI (optional)</h3>
+    <p class="muted">Locker never needs a key. Without one, <b>Fix with AI</b> falls back to <b>Insert gate</b>. To plug in a model, give any OpenAI-compatible chat-completions endpoint. The key stays in this browser's localStorage and is only sent to that endpoint. Pages can also register <code>window.LockerAI = { fix(source, findings) }</code>.</p>
+    <label>Endpoint <input id="aiUrl" placeholder="https://api.x.ai/v1/chat/completions"></label>
+    <label>Model <input id="aiModel" placeholder="grok-4"></label>
+    <label>API key <input id="aiKey" type="password" placeholder="optional"></label>
+    <div class="row"><button value="clear" class="btn ghost">Clear</button><span class="grow"></span><button value="save" class="btn primary">Save</button></div>
+  </form>
+</dialog>
+<footer>Static sandbox: your code never leaves the page unless you turn on an AI endpoint. <a href="https://github.com/fitzyracing1">fitzyracing1</a> · MIT</footer>
+<script type="module" src="src/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "locker",
+  "version": "1.0.0",
+  "description": "Static sandbox checker: every long integer (or string that is really a long) must be verified before use. Stamps unsafe code Not safe and inserts gates locally.",
+  "type": "module",
+  "license": "MIT",
+  "bin": { "locker": "bin/locker.mjs" },
+  "scripts": {
+    "test": "node --test test/",
+    "start": "python3 -m http.server 8080",
+    "check": "node bin/locker.mjs"
+  },
+  "engines": { "node": ">=18" }
+}
