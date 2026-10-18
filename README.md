@@ -1,5 +1,7 @@
 # Locker
 
+**Live:** https://fitzyracing1.github.io/locker/ · **Repo:** https://github.com/fitzyracing1/locker
+
 **Every long is verified before use, or the endpoint is not isolated.**
 
 Locker checks source in a static sandbox (nothing is executed). A long integer, or a string that is really a long (ids, account numbers, amounts, serials), has to be verified before it is used. That check is what isolates the endpoint. If the source skips it, the stamp says **Not safe**.
