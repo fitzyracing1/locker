@@ -6,7 +6,7 @@
   "license": "MIT",
   "bin": { "locker": "bin/locker.mjs" },
   "scripts": {
-    "test": "node --test test/",
+    "test": "node --test test/*.test.js",
     "start": "python3 -m http.server 8080",
     "check": "node bin/locker.mjs"
   },
